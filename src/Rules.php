@@ -1,5 +1,7 @@
 <?php
 
+namespace RuleX\RuleX;
+
 /**
  * PHP simple rule engine
  *
@@ -110,6 +112,11 @@ class Rules {
         $this->data = $data;
     }
 
+    public function getData()
+    {
+        return $this->data;
+    }
+
     public function execute($ruleName) {
         if (!isset($this->rules[$ruleName])) {
             throw new Exception($ruleName . ':' . $this->errorsCode[self::E_RULENAMENOTEXISTS], self::E_RULENAMENOTEXISTS);
@@ -173,6 +180,7 @@ class Rules {
                 $params = array();
                 preg_match_all("#call\(\s*(.+)\s*\)#i", $actionString, $params, PREG_SET_ORDER);
                 $list = explode(',', $params[0][1]);
+
                 $methodParams = array_slice($list, 1);
                 //$methodParams 有变量的,需要计算出变量值
                 if (stristr($list[0], '->') !== false) {
@@ -187,7 +195,6 @@ class Rules {
                             $methodParams[$pk] = $this->getMapValue(explode(':', $var), $this->data);
                         }
                     }
-
                     $class->$method($methodParams);
                 } else {
                     $method = $list[0];
@@ -211,7 +218,6 @@ class Rules {
                     $kv[0] = trim($kv[0]);
                     $updateData[$kv[0]] = $this->getTureValue($kv[1]);
                 }
-
                 foreach ($updateData as $key => $value) {
                     $rs[$key] = $value;
                 }
@@ -221,7 +227,7 @@ class Rules {
                 $value = trim($matchs[0][3]);
                 if (substr($value, 0, 1) == '$') {
                     //$value = $this->getMapValue(explode(':', substr($value, 1)), $this->data);
-                    $value = $this->getTureValue($value, $this->data);
+                    $value = $this->getTureValue($value);
                 }
                 $this->data[$key] = $value;
             }

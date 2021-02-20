@@ -1,0 +1,13 @@
+rule testRule
+// 测试规则
+when
+    $user(age>=18)
+then
+    $des=你好啊
+    $user:order(id=12321321321)
+when
+    $user(age<18)
+then
+    $des=上海仓
+    $user:order(id=18)
+end

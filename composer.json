@@ -1,9 +1,27 @@
 {
-    "name": "tonera/rules",
+    "name": "rulex/rulex",
+    "type": "library",
+    "license": "MIT",
     "support": {
 		"source": "https://github.com/tonera/Rules"
     },
+    "keywords": [
+        "php",
+        "rule engine"
+    ],
+    "description": "PHP simple rule engine",
+    "autoload": {
+        "psr-4": {
+            "RuleX\\RuleX\\": "src/"
+        }
+    },
     "require":{
         "php": ">=5.3.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
     }
 }
